@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:three_dart/three_dart.dart' as THREE;
 import 'dart:math' as Math;
+import 'dart:ui' as ui;
+import 'dart:html' as html;
 
 void main() {
   runApp(const MyApp());
@@ -36,6 +38,7 @@ class _QuantumWeaverGameState extends State<QuantumWeaverGame> {
   late THREE.Group quantumThreads;
   late THREE.AnimationMixer mixer;
   late THREE.Clock clock;
+  late html.CanvasElement canvas;
 
   double time = 0.0;
   bool isWeaving = false;
@@ -48,13 +51,20 @@ class _QuantumWeaverGameState extends State<QuantumWeaverGame> {
   }
 
   void initThreeJS() {
+    canvas = html.CanvasElement();
+    canvas.width = 400;
+    canvas.height = 400;
+
     scene = THREE.Scene();
     camera = THREE.PerspectiveCamera(75, 1.0, 0.1, 1000);
     camera.position.set(0, 0, 5);
 
-    renderer = THREE.WebGLRenderer({'antialias': true});
+    renderer = THREE.WebGLRenderer({'canvas': canvas, 'antialias': true});
     renderer.setSize(400, 400);
     renderer.shadowMap.enabled = true;
+
+    // Register the canvas for Flutter
+    ui.platformViewRegistry.registerViewFactory('three-canvas', (int viewId) => canvas);
 
     // Player (quantum particle)
     var playerGeometry = THREE.SphereGeometry(0.1);
