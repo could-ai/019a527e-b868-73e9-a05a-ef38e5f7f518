@@ -52,20 +52,20 @@ class _QuantumWeaverGameState extends State<QuantumWeaverGame> {
     camera = THREE.PerspectiveCamera(75, 1.0, 0.1, 1000);
     camera.position.set(0, 0, 5);
 
-    renderer = THREE.WebGLRenderer(antialias: true);
+    renderer = THREE.WebGLRenderer({'antialias': true});
     renderer.setSize(400, 400);
     renderer.shadowMap.enabled = true;
 
     // Player (quantum particle)
     var playerGeometry = THREE.SphereGeometry(0.1);
-    var playerMaterial = THREE.MeshPhongMaterial(color: 0x00ff00);
+    var playerMaterial = THREE.MeshPhongMaterial({'color': 0x00ff00});
     player = THREE.Mesh(playerGeometry, playerMaterial);
     player.position.set(0, 0, 0);
     scene.add(player);
 
     // Target (decohering particle)
     var targetGeometry = THREE.OctahedronGeometry(0.3);
-    var targetMaterial = THREE.MeshPhongMaterial(color: 0xff0000);
+    var targetMaterial = THREE.MeshPhongMaterial({'color': 0xff0000});
     target = THREE.Mesh(targetGeometry, targetMaterial);
     target.position.set(Math.Random().nextDouble() * 4 - 2, Math.Random().nextDouble() * 4 - 2, Math.Random().nextDouble() * 4 - 2);
     scene.add(target);
@@ -95,7 +95,7 @@ class _QuantumWeaverGameState extends State<QuantumWeaverGame> {
     // Create fractal-like 3D structures using recursive geometry
     for (int i = 0; i < 50; i++) {
       var fractalGeometry = THREE.BoxGeometry(0.1, 0.1, 0.1);
-      var fractalMaterial = THREE.MeshLambertMaterial(color: THREE.MathUtils.randInt(0x000000, 0xffffff));
+      var fractalMaterial = THREE.MeshLambertMaterial({'color': THREE.MathUtils.randInt(0x000000, 0xffffff)});
       var fractal = THREE.Mesh(fractalGeometry, fractalMaterial);
       fractal.position.set(
         Math.Random().nextDouble() * 10 - 5,
@@ -158,7 +158,7 @@ class _QuantumWeaverGameState extends State<QuantumWeaverGame> {
       if (isWeaving) {
         // Create quantum thread
         var threadGeometry = THREE.CylinderGeometry(0.01, 0.01, 1);
-        var threadMaterial = THREE.MeshBasicMaterial(color: 0x0000ff);
+        var threadMaterial = THREE.MeshBasicMaterial({'color': 0x0000ff});
         var thread = THREE.Mesh(threadGeometry, threadMaterial);
         thread.position.copy(player.position);
         quantumThreads.add(thread);
